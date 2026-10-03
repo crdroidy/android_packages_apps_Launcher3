@@ -850,7 +850,8 @@ public class DeviceProfile {
      */
     public Rect getHotseatLayoutPadding(Context context) {
         boolean isTaskbarPresent = mDeviceProperties.getTaskbarConfiguration().isTaskbarPresent() &&
-                mEnableTaskbar;
+                (mEnableTaskbar
+                        || mDeviceProperties.getDeviceConfiguration().isExternalDisplay());
         Rect hotseatBarPadding = new Rect();
         if (isVerticalBarLayout()) {
             // The hotseat icons will be placed in the middle of the hotseat cells.

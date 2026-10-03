@@ -594,7 +594,8 @@ public class TaskbarManagerImpl {
     private Unit onEnableTaskbarChanged(int newRawValue) {
         mResources.forEach(resource -> {
             var activity = resource.getTaskbar();
-            if (activity == null) return;
+            // Only the primary display follows the toggle, so only it can be out of date.
+            if (activity == null || !activity.isPrimaryDisplay()) return;
             int newValue = resolveTaskbarEnabled(newRawValue,
                     activity.getDeviceProfile().getDeviceProperties().isLargeScreen());
             if (activity.isTaskbarEnabled() != newValue) {

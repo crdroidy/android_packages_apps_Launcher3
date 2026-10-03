@@ -377,8 +377,11 @@ public class TaskbarActivityContext extends BaseTaskbarContext {
         mIsNavBarKidsMode = settingsCache.getValue(URI_NAV_BAR_KIDS_MODE);
         int rawTaskbarSetting = settingsCache.getIntValue(URI_ENABLE_TASKBAR,
                 TASKBAR_SETTING_UNSET);
-        mIsTaskbarEnabled = resolveTaskbarEnabled(rawTaskbarSetting,
-                launcherDp.getDeviceProperties().isLargeScreen());
+        // The taskbar toggle is for the phone's own screen; desktop displays always get one.
+        mIsTaskbarEnabled = isPrimaryDisplay
+                ? resolveTaskbarEnabled(rawTaskbarSetting,
+                        launcherDp.getDeviceProperties().isLargeScreen())
+                : 1;
         mIsNavbarHintEnabled = settingsCache.getValue(URI_NAVIGATION_BAR_HINT);
         mNavbarLayoutMode = settingsCache.getIntValue(URI_NAVBAR_LAYOUT_MODE);
         mIsNavbarEnabled = settingsCache.getIntValue(URI_FORCE_SHOW_NAVBAR,
